@@ -1,5 +1,5 @@
 # BitcoinSVCryptor
-BitcoinSVCryptor integrates bitcoin private/public keys with serval encrypt methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version.
+BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version.
 
 
 Open BSV License.

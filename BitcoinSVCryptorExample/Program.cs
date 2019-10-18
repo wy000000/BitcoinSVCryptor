@@ -28,7 +28,7 @@ namespace BitcoinSVCryptorExample
             string DecryptedStr = null;
             string s = null;
 
-            ////sign and verify
+            ////ECDSA
             //s = BitcoinSVCryptor_class.sign(privateKey1Str, data);
             //bool success = BitcoinSVCryptor_class.verifySignature(publicKey1Str, data, s);
             //Console.WriteLine(success);

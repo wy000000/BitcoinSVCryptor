@@ -7,11 +7,22 @@
     <FileVersion>0.1.0.0</FileVersion>
     <Authors>wy</Authors>
     <Version>0.1.0.0</Version>
+    <Description>BitcoinSVCryptor integrates bitcoin private/public keys with serval encrypt methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version.</Description>
+    <PackageLicenseFile>Open BSV License.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/wy000000/BitcoinSVCryptor.git</PackageProjectUrl>
+    <PackageReleaseNotes>BitcoinSVCryptor integrates bitcoin private/public keys with serval encrypt methods.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NBitcoin.Altcoins" Version="1.0.5" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Open BSV License.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

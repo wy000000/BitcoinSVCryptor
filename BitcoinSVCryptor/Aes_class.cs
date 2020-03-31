@@ -16,14 +16,14 @@ namespace BitcoinSVCryptor
             using (aes)
             {                
                 // Encrypt the message
-                using (MemoryStream ciphertext = new MemoryStream())
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    using (CryptoStream cs = new CryptoStream(ciphertext, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
                     {
-                        byte[] plaintextMessage = Encoding.UTF8.GetBytes(secretMessage);
-                        cs.Write(plaintextMessage, 0, plaintextMessage.Length);
+                        byte[] messageBytes = Encoding.UTF8.GetBytes(secretMessage);
+                        cs.Write(messageBytes, 0, messageBytes.Length);
                         cs.Close();
-                        byte[] encryptedMessage = ciphertext.ToArray();
+                        byte[] encryptedMessage = ms.ToArray();
                         return (encryptedMessage);
                     }
                 }
@@ -34,13 +34,13 @@ namespace BitcoinSVCryptor
             using (aes)
             {
                 // Decrypt the message
-                using (MemoryStream plaintext = new MemoryStream())
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    using (CryptoStream cs = new CryptoStream(plaintext, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(encryptedMessage, 0, encryptedMessage.Length);
                         cs.Close();
-                        string message = Encoding.UTF8.GetString(plaintext.ToArray());
+                        string message = Encoding.UTF8.GetString(ms.ToArray());
                         return (message);
                     }
                 }

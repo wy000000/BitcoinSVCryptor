@@ -3,14 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
+    <AssemblyVersion>0.1.0.1</AssemblyVersion>
+    <FileVersion>0.1.0.1</FileVersion>
     <Authors>wy</Authors>
-    <Version>0.1.0.0</Version>
-    <Description>BitcoinSVCryptor integrates bitcoin private/public keys with serval encrypt methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version.</Description>
+    <Version>0.1.0.1</Version>
+    <Description>BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. bsv, bitcoin sv.</Description>
     <PackageLicenseFile>Open BSV License.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/wy000000/BitcoinSVCryptor.git</PackageProjectUrl>
-    <PackageReleaseNotes>BitcoinSVCryptor integrates bitcoin private/public keys with serval encrypt methods.</PackageReleaseNotes>
+    <PackageReleaseNotes>BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods.</PackageReleaseNotes>
+    <Copyright>Open BSV License</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

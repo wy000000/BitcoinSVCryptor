@@ -14,11 +14,11 @@ namespace BitcoinSVCryptorExample
         static void Main(string[] args)
         {
             //1
-            string privateKey1Str = "cRNhzZjgVFZ9gU9ibK2rez7WCUc7AVwqenHngdSsBZBG1uwH6otQ";
+            string privateKey1Str = "";
             byte[] publicKey1 = BitcoinSVCryptor_class.getBCPublicKey(privateKey1Str);
             string publicKey1Str = BitcoinSVCryptor_class.getCompressedBCPublicKey(privateKey1Str);
             //2
-            string privateKey2Str = "cQb3D2ueYfiAtZhHrAD2LQKaaRfR18xq1rAZwuYQovC9uYVG3C8c";
+            string privateKey2Str = "";
             byte[] publicKey2 = BitcoinSVCryptor_class.getBCPublicKey(privateKey2Str);
             string publicKey2Str = BitcoinSVCryptor_class.getCompressedBCPublicKey(privateKey2Str);
 

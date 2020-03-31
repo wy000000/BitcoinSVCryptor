@@ -26,5 +26,5 @@ Open BSV License.
 
 https://www.nuget.org/packages/BitcoinSVCryptor/
 
-18WrLbAU54S8N16jMHomkhqpMtkPHLh3Dv
+12Nu5u5pgP7XvFGj31t71cdsmmWR7W2f83
 

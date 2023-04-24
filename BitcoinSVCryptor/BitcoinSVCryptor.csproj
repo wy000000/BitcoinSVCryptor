@@ -3,27 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.1.0.1</AssemblyVersion>
-    <FileVersion>0.1.0.1</FileVersion>
+    <AssemblyVersion>0.1.1.0</AssemblyVersion>
+    <FileVersion>0.1.1.0</FileVersion>
     <Authors>wy</Authors>
-    <Version>0.1.0.1</Version>
-    <Description>BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. bsv, bitcoin sv.</Description>
-    <PackageLicenseFile>Open BSV License.txt</PackageLicenseFile>
+    <Version>0.1.1.0</Version>
+    <Description>Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes. BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. bsv, bitcoin sv.</Description>
     <PackageProjectUrl>https://github.com/wy000000/BitcoinSVCryptor.git</PackageProjectUrl>
-    <PackageReleaseNotes>BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods.</PackageReleaseNotes>
-    <Copyright>Open BSV License</Copyright>
+    <PackageReleaseNotes>Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes. BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods.</PackageReleaseNotes>
+    <Copyright></Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NBitcoin.Altcoins" Version="1.0.5" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Open BSV License.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

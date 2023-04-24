@@ -39,7 +39,13 @@ namespace BitcoinSVCryptor
         }
         static Aes getAes(byte[] senderPublicKey, byte[] receiverPublicKey, byte[] aesKey)
         {
-            byte[] bytes = senderPublicKey.Concat(receiverPublicKey).ToArray();
+            byte[] bytes = new byte[senderPublicKey.Length];
+
+			for (int i=0;i<senderPublicKey.Length;i++)
+            {
+                bytes[i] = (byte)(senderPublicKey[i] ^ receiverPublicKey[i]);
+            }
+            //byte[] bytes = senderPublicKey.Concat(receiverPublicKey).ToArray();
             SHA256 sha256 = SHA256.Create();
             byte[] iv = new byte[16];
             Array.Copy(sha256.ComputeHash(bytes), 0, iv, 0, 15);
@@ -79,7 +85,7 @@ namespace BitcoinSVCryptor
             ECPublicKeyParameters ECPubKeyPt = TlsEccUtilities.DeserializeECPublicKey(null, ecdp, BCPublicKey);
             ECPublicKeyParameters basePoint = TlsEccUtilities.ValidateECPublicKey(ECPubKeyPt);
             SubjectPublicKeyInfo subinfo = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(basePoint);
-            ECPublicKeyParameters ECPublicKey = (ECPublicKeyParameters)PublicKeyFactory.CreateKey(subinfo);            
+            ECPublicKeyParameters ECPublicKey = (ECPublicKeyParameters)PublicKeyFactory.CreateKey(subinfo);
             return (ECPublicKey);
         }
         static AsymmetricCipherKeyPair GetKeyPair(string bitcoinPrivateKeyStr)

@@ -21,92 +21,135 @@ using NBitcoin.DataEncoders;
 
 namespace BitcoinSVCryptor
 {
-    public class ECDHAes_class
-    {
-        public static byte[] ECDHAesEncrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, string plainText)
-        {
-            byte[] ECDHAesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
-            Aes aes = getAes(BitcoinSVCryptor_class.getBCPublicKey(myBitcoinPrivateKeyStr), otherPartyPublicKey, ECDHAesKey);
-            byte[] cipher = AES_class.AesEncrypt(aes, plainText);
-            return (cipher);
-        }
-        public static string ECDHAesDecrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, byte[] cipher)
-        {
-            byte[] ECDHAesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
-            Aes aes = getAes(otherPartyPublicKey, BitcoinSVCryptor_class.getBCPublicKey(myBitcoinPrivateKeyStr), ECDHAesKey);
-            string plainText = AES_class.AesDecrypt(aes, cipher);
-            return (plainText);
-        }
-        static Aes getAes(byte[] senderPublicKey, byte[] receiverPublicKey, byte[] aesKey)
-        {
-            byte[] bytes = new byte[senderPublicKey.Length];
+	public class ECDHAes_class
+	{
+		public static byte[] ECDHAesEncrypt(string myBitcoinPrivateKeyStr, string otherPartyPublicKeyStr, string plainText)
+		{
+			byte[] otherPartyPublicKey = ConvertPublicKeyStringToBytes(otherPartyPublicKeyStr);
+			return (ECDHAesEncrypt(myBitcoinPrivateKeyStr, otherPartyPublicKey, plainText));
+		}
+		public static byte[] ECDHAesEncrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, string plainText)
+		{
+			otherPartyPublicKey = DecompressPubKey(otherPartyPublicKey);
+			byte[] ECDHAesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
+			Aes aes = getAes(BitcoinSVCryptor_class.getBCPublicKey(myBitcoinPrivateKeyStr), otherPartyPublicKey, ECDHAesKey);
+			byte[] cipher = AES_class.AesEncrypt(aes, plainText);
+			return (cipher);
+		}
+
+		public static string ECDHAesDecrypt(string myBitcoinPrivateKeyStr, string otherPartyPublicKeyStr, byte[] cipher)
+		{
+			byte[] otherPartyPublicKey = ConvertPublicKeyStringToBytes(otherPartyPublicKeyStr);
+			return (ECDHAesDecrypt(myBitcoinPrivateKeyStr, otherPartyPublicKey, cipher));
+		}
+		public static string ECDHAesDecrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, byte[] cipher)
+		{
+			otherPartyPublicKey = DecompressPubKey(otherPartyPublicKey);
+			byte[] ECDHAesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
+			Aes aes = getAes(otherPartyPublicKey, BitcoinSVCryptor_class.getBCPublicKey(myBitcoinPrivateKeyStr), ECDHAesKey);
+			string plainText = AES_class.AesDecrypt(aes, cipher);
+			return (plainText);
+		}
+
+		static Aes getAes(byte[] senderPublicKey, byte[] receiverPublicKey, byte[] aesKey)
+		{
+			byte[] bytes = new byte[senderPublicKey.Length];
 
 			for (int i=0;i<senderPublicKey.Length;i++)
-            {
-                bytes[i] = (byte)(senderPublicKey[i] ^ receiverPublicKey[i]);
-            }
-            //byte[] bytes = senderPublicKey.Concat(receiverPublicKey).ToArray();
-            SHA256 sha256 = SHA256.Create();
-            byte[] iv = new byte[16];
-            Array.Copy(sha256.ComputeHash(bytes), 0, iv, 0, 15);
-            Aes aes = Aes.Create();
-            aes.Key = aesKey;
-            aes.IV = iv;
-            return (aes);
-        }
-        public static byte[] ECDHAesEncrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, string plainText, out byte[] iv)
-        {
-            byte[] aesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
-            byte[] encryptedByte = AES_class.AesEncrypt(aesKey, plainText, out iv);
-            return (encryptedByte);
-        }
-        public static string ECDHAesDecrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, byte[] encryptedBytes, byte[] iv)
-        {
-            byte[] aesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
-            string plainText = AES_class.AesDecrypt(aesKey, encryptedBytes, iv);
-            return (plainText);
-        }
-        static byte[] GetECDHAesKey(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey)
-        {
-            AsymmetricCipherKeyPair myKeyPair = GetKeyPair(myBitcoinPrivateKeyStr);// new AsymmetricCipherKeyPair(myECPublicKey, myECPrivateKey);            
-            //create ecdh aes key
-            ECDHBasicAgreement agreement = new ECDHBasicAgreement();
-            agreement.Init(myKeyPair.Private);
-            BigInteger aesKeyBI = agreement.CalculateAgreement(getECPublicKey(otherPartyPublicKey));
-            byte[] aesKey = aesKeyBI.ToByteArrayUnsigned();
-            return (aesKey);
-        }
-        static ECPublicKeyParameters getECPublicKey(byte[] BCPublicKey)
-        {
-            // Import public key
-            X9ECParameters curve = SecNamedCurves.GetByName("secp256k1");
-            ECDomainParameters domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
-            ECDomainParameters ecdp = TlsEccUtilities.GetParametersForNamedCurve(NamedCurve.secp256k1);
-            ECPublicKeyParameters ECPubKeyPt = TlsEccUtilities.DeserializeECPublicKey(null, ecdp, BCPublicKey);
-            ECPublicKeyParameters basePoint = TlsEccUtilities.ValidateECPublicKey(ECPubKeyPt);
-            SubjectPublicKeyInfo subinfo = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(basePoint);
-            ECPublicKeyParameters ECPublicKey = (ECPublicKeyParameters)PublicKeyFactory.CreateKey(subinfo);
-            return (ECPublicKey);
-        }
-        static AsymmetricCipherKeyPair GetKeyPair(string bitcoinPrivateKeyStr)
-        {
-            //import private key and generate public key
-            byte[] bitcoinPrivateKeyBytes = BitcoinSVCryptor_class.getBCPrivateKey(bitcoinPrivateKeyStr);
-            X9ECParameters curve = SecNamedCurves.GetByName("secp256k1");
-            ECDomainParameters domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
-            BigInteger BCPrivateKey_D = new BigInteger(1, bitcoinPrivateKeyBytes);
-            Org.BouncyCastle.Math.EC.ECPoint q = domain.G.Multiply(BCPrivateKey_D);
-            ECPrivateKeyParameters ECPrivateKey = new ECPrivateKeyParameters(BCPrivateKey_D, domain);
-            ECPublicKeyParameters ECPublicKey = new ECPublicKeyParameters(q, domain);
-            AsymmetricCipherKeyPair KeyPair = new AsymmetricCipherKeyPair(ECPublicKey, ECPrivateKey);
-            return (KeyPair);
-        }
+			{
+				bytes[i] = (byte)(senderPublicKey[i] ^ receiverPublicKey[i]);
+			}
+			//byte[] bytes = senderPublicKey.Concat(receiverPublicKey).ToArray();
+			SHA256 sha256 = SHA256.Create();
+			byte[] iv = new byte[16];
+			Array.Copy(sha256.ComputeHash(bytes), 0, iv, 0, 15);
+			Aes aes = Aes.Create();
+			aes.Key = aesKey;
+			aes.IV = iv;
+			return (aes);
+		}
 
-        
+		public static byte[] ECDHAesEncrypt(string myBitcoinPrivateKeyStr, string otherPartyPublicKeyStr, string plainText, out byte[] iv)
+		{
+			byte[] otherPartyPublicKey = ConvertPublicKeyStringToBytes(otherPartyPublicKeyStr);
+			return (ECDHAesEncrypt(myBitcoinPrivateKeyStr, otherPartyPublicKey, plainText, out iv));
+		}
+		public static byte[] ECDHAesEncrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, string plainText, out byte[] iv)
+		{
+			otherPartyPublicKey = DecompressPubKey(otherPartyPublicKey);
+			byte[] aesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
+			byte[] encryptedByte = AES_class.AesEncrypt(aesKey, plainText, out iv);
+			return (encryptedByte);
+		}
+		public static string ECDHAesDecrypt(string myBitcoinPrivateKeyStr, string otherPartyPublicKeyStr, byte[] encryptedBytes, byte[] iv)
+		{
+			byte[] otherPartyPublicKey = ConvertPublicKeyStringToBytes(otherPartyPublicKeyStr);
+			return (ECDHAesDecrypt(myBitcoinPrivateKeyStr, otherPartyPublicKey, encryptedBytes, iv));
+		}
+		public static string ECDHAesDecrypt(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey, byte[] encryptedBytes, byte[] iv)
+		{
+			otherPartyPublicKey = DecompressPubKey(otherPartyPublicKey);
+			byte[] aesKey = GetECDHAesKey(myBitcoinPrivateKeyStr, otherPartyPublicKey);
+			string plainText = AES_class.AesDecrypt(aesKey, encryptedBytes, iv);
+			return (plainText);
+		}
+		static byte[] GetECDHAesKey(string myBitcoinPrivateKeyStr, byte[] otherPartyPublicKey)
+		{
+			AsymmetricCipherKeyPair myKeyPair = GetKeyPair(myBitcoinPrivateKeyStr);// new AsymmetricCipherKeyPair(myECPublicKey, myECPrivateKey);            
+			//create ecdh aes key
+			ECDHBasicAgreement agreement = new ECDHBasicAgreement();
+			agreement.Init(myKeyPair.Private);
+			BigInteger aesKeyBI = agreement.CalculateAgreement(getECPublicKey(otherPartyPublicKey));
+			byte[] aesKey = aesKeyBI.ToByteArrayUnsigned();
+			return (aesKey);
+		}
+		static ECPublicKeyParameters getECPublicKey(byte[] BCPublicKey)
+		{
+			// Import public key
+			X9ECParameters curve = SecNamedCurves.GetByName("secp256k1");
+			ECDomainParameters domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
+			ECDomainParameters ecdp = TlsEccUtilities.GetParametersForNamedCurve(NamedCurve.secp256k1);
+			ECPublicKeyParameters ECPubKeyPt = TlsEccUtilities.DeserializeECPublicKey(null, ecdp, BCPublicKey);
+			ECPublicKeyParameters basePoint = TlsEccUtilities.ValidateECPublicKey(ECPubKeyPt);
+			SubjectPublicKeyInfo subinfo = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(basePoint);
+			ECPublicKeyParameters ECPublicKey = (ECPublicKeyParameters)PublicKeyFactory.CreateKey(subinfo);
+			return (ECPublicKey);
+		}
+		static AsymmetricCipherKeyPair GetKeyPair(string bitcoinPrivateKeyStr)
+		{
+			//import private key and generate public key
+			byte[] bitcoinPrivateKeyBytes = BitcoinSVCryptor_class.getBCPrivateKey(bitcoinPrivateKeyStr);
+			X9ECParameters curve = SecNamedCurves.GetByName("secp256k1");
+			ECDomainParameters domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
+			BigInteger BCPrivateKey_D = new BigInteger(1, bitcoinPrivateKeyBytes);
+			Org.BouncyCastle.Math.EC.ECPoint q = domain.G.Multiply(BCPrivateKey_D);
+			ECPrivateKeyParameters ECPrivateKey = new ECPrivateKeyParameters(BCPrivateKey_D, domain);
+			ECPublicKeyParameters ECPublicKey = new ECPublicKeyParameters(q, domain);
+			AsymmetricCipherKeyPair KeyPair = new AsymmetricCipherKeyPair(ECPublicKey, ECPrivateKey);
+			return (KeyPair);
+		}
 
+		static byte[] ConvertPublicKeyStringToBytes(string publicKeyStr)
+		{
+			// 解码 hex 字符串为 byte[]
+			byte[] pubKeyBytes = Encoders.Hex.DecodeData(publicKeyStr);
 
+			return (DecompressPubKey(pubKeyBytes));
+		}
+		static byte[] DecompressPubKey(byte[] pubKeyBytes)
+		{
+			PubKey pubKey = new PubKey(pubKeyBytes);
+			// 判断是否压缩
+			if (pubKey.IsCompressed)
+				// 转换为未压缩公钥
+				return pubKey.Decompress().ToBytes();
+			else
+				// 已经是未压缩公钥，直接返回
+				return pubKey.ToBytes();
+		}
 
-
-    }
+	}
 
 }
+
+

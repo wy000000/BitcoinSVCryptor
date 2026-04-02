@@ -3,14 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.1.1.0</AssemblyVersion>
-    <FileVersion>0.1.1.0</FileVersion>
+    <AssemblyVersion>0.1.2.0</AssemblyVersion>
+    <FileVersion>0.1.2.0</FileVersion>
     <Authors>wy</Authors>
-    <Version>0.1.1.0</Version>
-    <Description>Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes. BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. bsv, bitcoin sv.</Description>
+    <Version>0.1.2.0</Version>
+    <Description>Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.
+Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes.
+BitcoinSVCryptor ver 0.1.0 integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. </Description>
     <PackageProjectUrl>https://github.com/wy000000/BitcoinSVCryptor.git</PackageProjectUrl>
-    <PackageReleaseNotes>Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes. BitcoinSVCryptor integrates bitcoin private/public keys with serval encryption methods.</PackageReleaseNotes>
+    <PackageReleaseNotes>Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.</PackageReleaseNotes>
     <Copyright></Copyright>
+    <RepositoryUrl>https://github.com/wy000000/BitcoinSVCryptor.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

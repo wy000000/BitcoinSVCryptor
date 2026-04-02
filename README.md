@@ -1,29 +1,39 @@
 ﻿# BitcoinSVCryptor
+Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.
 Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes.
 BitcoinSVCryptor ver 0.1.0 integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. 
 
-            ////ECDSA
-            //s = BitcoinSVCryptor_class.sign(privateKey1Str, data);
-            //bool success = BitcoinSVCryptor_class.verifySignature(publicKey1Str, data, s);
-            //Console.WriteLine(success);
 
-            ////ECC
-            //s = BitcoinSVCryptor_class.ECCEncrypt(publicKey1Str, data);
-            //DecryptedStr = BitcoinSVCryptor_class.ECCDecrypt(privateKey1Str, s);
+			string data = "bsv test 1234";
+			Console.WriteLine(data);
+			byte[] encryptedBytes;
+			string DecryptedStr = null;
+			string s = null;
 
-            ////AES
-            //encryptedBytes = AES_class.AesEncrypt(data, privateKey1Str);
-            //DecryptedStr = AES_class.AesDecrypt(encryptedBytes, privateKey1Str);
+			////ECDSA
+			//s = BitcoinSVCryptor_class.sign(privateKey1Str, data);
+			//bool success = BitcoinSVCryptor_class.verifySignature(publicKey1Str, data, s);
+			//Console.WriteLine(success);
 
-            ////ECDHAes
-            ///publicKey should be uncompressed
-            //encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2, data);
-            //string DecryptedStr1 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1, encryptedBytes);
-            //string DecryptedStr2 = ECDHAes_class.ECDHAesDecrypt(privateKey1Str, publicKey2, encryptedBytes);
+			////ECC
+			//s = BitcoinSVCryptor_class.ECCEncrypt(publicKey1Str, data);
+			//DecryptedStr = BitcoinSVCryptor_class.ECCDecrypt(privateKey1Str, s);
 
-            //byte[] iv;
-            //encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2, data, out iv);
-            //DecryptedStr = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1, encryptedBytes, iv);
+			////AES
+			//encryptedBytes = AES_class.AesEncrypt(data, privateKey1Str);
+			//DecryptedStr = AES_class.AesDecrypt(encryptedBytes, privateKey1Str);
+
+			////ECDHAes
+			//encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2, data);
+			//string DecryptedStr1 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1, encryptedBytes);
+			//encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2Str, data);
+			//string DecryptedStr2 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1Str, encryptedBytes);
+
+			//byte[] iv;
+			//encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2, data, out iv);
+			//DecryptedStr1 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1, encryptedBytes, iv);
+			//encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2Str, data, out iv);
+			//DecryptedStr2 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1Str, encryptedBytes, iv);
 
 Open BSV License.
 

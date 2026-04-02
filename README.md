@@ -3,6 +3,14 @@ Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryp
 Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes.
 BitcoinSVCryptor ver 0.1.0 integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. 
 
+			//1
+			string privateKey1Str = "";
+			byte[] publicKey1 = BitcoinSVCryptor_class.getBCPublicKey(privateKey1Str);
+			string publicKey1Str = BitcoinSVCryptor_class.getCompressedBCPublicKey(privateKey1Str);
+			//2
+			string privateKey2Str = "";
+			byte[] publicKey2 = BitcoinSVCryptor_class.getBCPublicKey(privateKey2Str);
+			string publicKey2Str = BitcoinSVCryptor_class.getCompressedBCPublicKey(privateKey2Str);
 
 			string data = "bsv test 1234";
 			Console.WriteLine(data);

@@ -30,12 +30,14 @@ namespace BitcoinSVCryptorExample
 
 			////ECDSA
 			//s = BitcoinSVCryptor_class.sign(privateKey1Str, data);
+			//Console.WriteLine(s);
 			//bool success = BitcoinSVCryptor_class.verifySignature(publicKey1Str, data, s);
 			//Console.WriteLine(success);
 
 			////ECC
 			//s = BitcoinSVCryptor_class.ECCEncrypt(publicKey1Str, data);
 			//DecryptedStr = BitcoinSVCryptor_class.ECCDecrypt(privateKey1Str, s);
+
 
 			////AES
 			//encryptedBytes = AES_class.AesEncrypt(data, privateKey1Str);
@@ -49,9 +51,9 @@ namespace BitcoinSVCryptorExample
 
 			//byte[] iv;
 			//encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2, data, out iv);
-			//DecryptedStr1 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1, encryptedBytes, iv);
+			//string DecryptedStr1 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1, encryptedBytes, iv);
 			//encryptedBytes = ECDHAes_class.ECDHAesEncrypt(privateKey1Str, publicKey2Str, data, out iv);
-			//DecryptedStr2 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1Str, encryptedBytes, iv);
+			//string DecryptedStr2 = ECDHAes_class.ECDHAesDecrypt(privateKey2Str, publicKey1Str, encryptedBytes, iv);
 
 			Console.WriteLine(DecryptedStr);
 			Console.WriteLine("press any key to exit");

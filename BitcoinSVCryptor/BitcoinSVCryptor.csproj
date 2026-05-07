@@ -3,22 +3,25 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.1.2.0</AssemblyVersion>
-    <FileVersion>0.1.2.0</FileVersion>
+    <AssemblyVersion>0.1.3.0</AssemblyVersion>
+    <FileVersion>0.1.3.0</FileVersion>
     <Authors>wy</Authors>
-    <Version>0.1.2.0</Version>
-    <Description>Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.
+    <Version>0.1.3.0</Version>
+    <Description>Ver 0.1.3 upgraded for compatibility with NBitcoin 10.0.3.
+Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.
 Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes.
 BitcoinSVCryptor ver 0.1.0 integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. </Description>
     <PackageProjectUrl>https://github.com/wy000000/BitcoinSVCryptor.git</PackageProjectUrl>
-    <PackageReleaseNotes>Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.</PackageReleaseNotes>
+    <PackageReleaseNotes>Ver 0.1.3 upgraded for compatibility with NBitcoin 10.0.3.</PackageReleaseNotes>
     <Copyright></Copyright>
     <RepositoryUrl>https://github.com/wy000000/BitcoinSVCryptor.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NBitcoin.Altcoins" Version="1.0.5" />
-    <PackageReference Include="Portable.BouncyCastle" Version="1.8.5" />
+    <PackageReference Include="NBitcoin" Version="10.0.3" />
+    <PackageReference Include="NBitcoin.Altcoins" Version="6.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
   </ItemGroup>
 
 </Project>

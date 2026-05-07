@@ -1,4 +1,5 @@
 ﻿# BitcoinSVCryptor
+Ver 0.1.3 upgraded for compatibility with NBitcoin 10.0.3.
 Ver 0.1.2 allows passing a public key directly as a string to the ECDHAes encryption/decryption functions, with support for both compressed and uncompressed formats.
 Ver 0.1.1 fixes a bug for ECDHAes. Ver 0.1.1 is not compatible with ver 0.1.0 when using ECDHAes.
 BitcoinSVCryptor ver 0.1.0 integrates bitcoin private/public keys with serval encryption methods, including ECDSA, ECC, ECDH and AES. IBE is in the plan for future version. 
